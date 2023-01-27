@@ -1,0 +1,30 @@
+name: Microservice deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "Select environment to deploy to"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+
+env:
+  TYPE: ${{ inputs.type }}
+jobs:
+  deploy:
+    runs-on: #TODO: add github runner here
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Execute terraform init
+        working-directory: ./terraform/infrastructure/environments/${{inputs.type}}/my_microservice
+        run: terraform init -reconfigure
+
+      - name: Execute terraform apply
+        working-directory: ./terraform/infrastructure/environments/${{inputs.type}}/my_microservice
+        run: terraform apply -target=module.my_microservice -auto-approve
