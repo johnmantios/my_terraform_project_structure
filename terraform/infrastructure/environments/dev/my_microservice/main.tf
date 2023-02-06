@@ -1,14 +1,23 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~>3.0"
+    }
+  }
+}
+
 provider "aws" {
-  region = "us-east-1"
-  alias  = "us-east-1"
+  region = "eu-central-1"
+  alias  = "eu-central-1"
 }
 
 module "my_module" {
-  source = "../../../modules/my_module"
+  source = "../../../modules/my_microservice"
 
   env = var.env
 
   providers = {
-    aws = aws.us-east-1
+    aws = aws.eu-central-1
   }
 }

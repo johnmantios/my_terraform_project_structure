@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
-    region = "my_region"
-    bucket = "my_bucket"
-    key    = "my_bucket_key"
-  }
+    bucket = "application-${env}"
+    key    = "my_microservice/terraform.tfstate"
+    region = "eu-central-1"  
+    }
 }
+
